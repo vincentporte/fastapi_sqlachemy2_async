@@ -33,6 +33,8 @@ class MainApp:
         async def status():
             return {"status": "up"}
 
+        self.app.include_router(user_router, prefix="/api", tags=["user"])
+
     def add_middleware(self):
         # CORS
         origins = ["http://localhost", "http://localhost:8080", "https://benevoles.rencontrerlarche.com"]
