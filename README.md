@@ -14,26 +14,46 @@
 
 ## Install
 
+### setup env
+
 ```sh
 poetry install;
 cp .env.template .env;
 ```
 
-## Usage
+### setup DB
 
 ```sh
-docker-compose up -d;poetry shell;make dev
+docker-compose up -d;
+poetry shell;
+alembic upgrade head
 ```
 
-## Run tests
+## Usage
+
+### Spawn in virtualenv
+
+```sh
+poetry shell;
+```
+
+### Run dev server
+
+```sh
+make dev
+```
+
+### Run tests
 
 ```sh
 pytest tests/
 ```
 
-## Quality
+### Run quality
 
-* see Makefile
+```sh
+make quality
+```
 
 ## Database Migrations
 
