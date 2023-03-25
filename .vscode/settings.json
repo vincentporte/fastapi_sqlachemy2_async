@@ -1,0 +1,44 @@
+{
+    "python.analysis.autoImportCompletions": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.envFile": "${workspaceFolder}/.envrc",
+    "python.formatting.provider": "black",
+    "python.languageServer": "Pylance",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+    "python.linting.pylintArgs": [
+        "--disable=C0111", // missing docstring
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": false,
+    "html.format.wrapLineLength": 0,
+    "files.associations": {
+        "**/requirements{/**,*}.{txt,in}": "pip-requirements"
+    },
+    "editor.formatOnSave": true,
+    "editor.wordBasedSuggestionsMode": "allDocuments",
+    "editor.quickSuggestions": {
+        "other": true,
+        "comments": false,
+        "strings": true
+    },
+    "editor.wordBasedSuggestions": true,
+    "files.trimTrailingWhitespace": true,
+    "html.format.enable": true,
+    "[python]": {
+        "editor.wordBasedSuggestions": true,
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        }
+    },
+    "security.workspace.trust.untrustedFiles": "open",
+    "explorer.confirmDragAndDrop": false,
+    "files.insertFinalNewline": true,
+    "python.testing.pytestArgs": [],
+    "python.defaultInterpreterPath": "~/.venv/bin/python"
+}

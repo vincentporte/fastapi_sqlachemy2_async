@@ -1,0 +1,81 @@
+[tool.poetry]
+name = "rencontrerlarche_benevolents"
+version = "0.1.0"
+description = "Benevolents missions management for L'Arche associations"
+authors = ["Vincent Porte <vincent@neuralia.co>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-dotenv = "^0.21.0"
+fontawesomefree = "^6.2.0"
+uvicorn = "^0.20.0"
+pydantic = {extras = ["email"], version = "^1.10.2"}
+typer = "^0.7.0"
+asyncpg = "^0.27.0"
+fastapi = "^0.94.1"
+sqlalchemy = {extras = ["asyncio"], version = "^2.0.7"}
+
+
+[tool.poetry.group.dev.dependencies]
+poethepoet = "^0.16.2"
+black = "^22.8.0"
+flake8 = "^5.0.4"
+isort = "^5.10.1"
+pre-commit = "^2.20.0"
+pylint = "^2.15.2"
+alembic = "^1.10.2"
+mypy = "*"
+
+[tool.poetry.group.test]
+[tool.poetry.group.test.dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+pytest-postgresql = "^4.1.1"
+psycopg = "^3.1.8"
+httpx = "^0.23.3"
+coverage = "^6.4.4"
+faker = "^18.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poe.tasks]
+export = { shell = "poetry export --without-hashes --output requirements/base.txt" }
+export_dev = { shell = "poetry export --without-hashes --with dev --output requirements/dev.txt" }
+
+[tool.isort]
+profile = "black"
+
+[tool.black]
+line_length = 119
+
+[tool.pytest.ini_options]
+testpaths = "tests"
+python_files = "test_*.py"
+python_functions = "test_*"
+python_classes = "Test* *Tests"
+addopts = "-vv -x"
+asyncio_mode = "auto"
+pythonpath = ["."]
+
+[tool.mypy]
+check_untyped_defs = true
+namespace_packages = true
+plugins = "sqlalchemy.ext.mypy.plugin"
+pretty = true
+show_error_context = true
+exclude = ".venv"
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "backoff.*",
+  "opentracing.*",
+]
+ignore_missing_imports = true

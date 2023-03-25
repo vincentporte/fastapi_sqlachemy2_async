@@ -1,0 +1,14 @@
+[MESSAGES CONTROL]
+disable =
+	arguments-differ,
+	duplicate-code,
+	invalid-name,
+	missing-docstring,
+	no-member,
+	too-few-public-methods,
+	too-many-lines
+
+[FORMAT]
+
+# Maximum number of characters on a single line.
+max-line-length=119
