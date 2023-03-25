@@ -6,7 +6,7 @@ from sqlalchemy import select
 
 from app.services.database import sessionmanager
 from app.users.models import User
-from tests.fixtures import user, users
+from tests.fixtures import user, users  # noqa F401
 
 fake = Faker()
 
@@ -24,14 +24,14 @@ async def test_create_user():
     async with sessionmanager.session() as session:
         email = fake.email()
         full_name = fake.name()
-        user = await User.create(db=session, email=email, full_name=full_name)
+        created_user = await User.create(db=session, email=email, full_name=full_name)
 
         # verify that the user is added to the database
         result = await session.execute(select(User).filter_by(id=user.id))
-        assert result.scalar() == user
+        assert result.scalar() == created_user
 
-        assert user.email == email
-        assert user.full_name == full_name
+        assert created_user.email == email
+        assert created_user.full_name == full_name
         assert is_valid_uuid(user.id)
 
 
@@ -41,19 +41,19 @@ async def test_create_user_with_id():
         email = fake.email()
         full_name = fake.name()
         id = fake.text(max_nb_chars=10)
-        user = await User.create(db=session, email=email, full_name=full_name, id=id)
+        created_user = await User.create(db=session, email=email, full_name=full_name, id=id)
 
         # verify that the user is added to the database
         result = await session.execute(select(User).filter_by(id=user.id))
-        assert result.scalar() == user
+        assert result.scalar() == created_user
 
-        assert user.email == email
-        assert user.full_name == full_name
-        assert user.id == id
+        assert created_user.email == email
+        assert created_user.full_name == full_name
+        assert created_user.id == id
 
 
 @pytest.mark.asyncio
-async def test_get(user):
+async def test_get(user):  # noqa F811
     async with sessionmanager.session() as session:
         result = await User.get(db=session, id=user.id)
         assert result.email == user.email
@@ -61,7 +61,7 @@ async def test_get(user):
 
 
 @pytest.mark.asyncio
-async def test_get_all(users):
+async def test_get_all(users):  # noqa F811
     async with sessionmanager.session() as session:
         qs = await User.get_all(db=session)
         assert len(qs) == 2
