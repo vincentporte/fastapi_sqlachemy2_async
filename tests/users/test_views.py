@@ -8,6 +8,8 @@ def test_create_user(client):
         json={"email": "test@example.com", "full_name": "Full Name Test"},
     )
     assert response.status_code == 200
+    assert response.json().get("email") == "test@example.com"
+    assert response.json().get("full_name") == "Full Name Test"
 
     response = client.get(f"/api/users/{response.json().get('id')}")
     assert response.status_code == 200

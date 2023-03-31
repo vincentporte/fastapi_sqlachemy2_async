@@ -27,12 +27,12 @@ async def test_create_user():
         created_user = await User.create(db=session, email=email, full_name=full_name)
 
         # verify that the user is added to the database
-        result = await session.execute(select(User).filter_by(id=user.id))
+        result = await session.execute(select(User).filter_by(id=created_user.id))
         assert result.scalar() == created_user
 
         assert created_user.email == email
         assert created_user.full_name == full_name
-        assert is_valid_uuid(user.id)
+        assert is_valid_uuid(created_user.id)
 
 
 @pytest.mark.asyncio
@@ -44,7 +44,7 @@ async def test_create_user_with_id():
         created_user = await User.create(db=session, email=email, full_name=full_name, id=id)
 
         # verify that the user is added to the database
-        result = await session.execute(select(User).filter_by(id=user.id))
+        result = await session.execute(select(User).filter_by(id=created_user.id))
         assert result.scalar() == created_user
 
         assert created_user.email == email
