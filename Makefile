@@ -5,9 +5,6 @@
 # The following rules can be used during development in order to launch development server, generate
 # locales, etc.
 # --------------------------------------------------------------------------------------------------
-dependencies:
-	poetry lock; poetry run poe export; poetry run poe export_dev
-
 live:
 	uvicorn app.main:app --workers 4 --host 0.0.0.0 --port 8000
 
