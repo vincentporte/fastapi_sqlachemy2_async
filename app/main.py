@@ -29,7 +29,7 @@ class MainApp:
         self.custom_openapi()
 
     def add_routes(self):
-        @self.app.get("/")
+        @self.app.get("/api/status")
         async def status():
             return {"status": "up"}
 
