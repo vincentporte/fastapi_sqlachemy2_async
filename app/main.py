@@ -1,9 +1,9 @@
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
-from starlette.requests import Request
+from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.services.database import sessionmanager
@@ -24,9 +24,13 @@ class MainApp:
                     await sessionmanager.close()
 
         self.app = FastAPI(title="FastAPI server", lifespan=lifespan)
+        self.add_static_files()
         self.add_routes()
         self.add_middleware()
         self.custom_openapi()
+
+    def add_static_files(self):
+        self.app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
     def add_routes(self):
         @self.app.get("/api/status")
