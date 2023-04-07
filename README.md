@@ -106,3 +106,4 @@ _This README was generated with ❤️ by [readme-md-generator](https://github.c
 
 ### notes
 * https://praciano.com.br/fastapi-and-async-sqlalchemy-20-with-pytest-done-right.html
+* https://www.fastapitutorial.com/blog/static-files-fastapi/
