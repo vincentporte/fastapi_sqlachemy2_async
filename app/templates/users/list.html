@@ -1,0 +1,22 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %}
+  <title>Leaders Board</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <h1 class="display-4">Find great peoples...</h1>
+
+    {% for user in users %}
+      <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">{{ user.full_name }}</h5>
+          <p class="card-text">{{ user.email }}</p>
+        </div>
+      </div>
+    {% endfor %}
+
+  </div>
+{% endblock %}
