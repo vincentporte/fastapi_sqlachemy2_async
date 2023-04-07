@@ -5,7 +5,7 @@ from app.services.database import get_db
 from app.users.models import User as UserModel
 from app.users.schemas import UserSchema, UserSchemaCreate
 
-router = APIRouter(prefix="/users", tags=["user"])
+router = APIRouter(prefix="/users")
 
 
 @router.get("/{id}/", response_model=UserSchema)

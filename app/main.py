@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.services.database import sessionmanager
-from app.users.routes import router as user_router
+from app.users import routes
 
 
 class MainApp:
@@ -37,7 +37,7 @@ class MainApp:
         async def status():
             return {"status": "up"}
 
-        self.app.include_router(user_router, prefix="/api", tags=["user"])
+        self.app.include_router(routes.router, prefix="/api", tags=["user"])
 
     def add_middleware(self):
         # CORS
