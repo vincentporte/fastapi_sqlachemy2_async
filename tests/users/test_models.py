@@ -53,11 +53,29 @@ async def test_create_user_with_id():
 
 
 @pytest.mark.asyncio
+async def test_create_user_with_duplicated_email():
+    async with sessionmanager.session() as session:
+        email = fake.email()
+        full_name = fake.name()
+        created_user = await User.create(db=session, email=email, full_name=full_name)
+
+        created_user = await User.create(db=session, email=email, full_name=full_name)
+        assert created_user is None
+
+
+@pytest.mark.asyncio
 async def test_get(user):  # noqa F811
     async with sessionmanager.session() as session:
         result = await User.get(db=session, id=user.id)
         assert result.email == user.email
         assert result.full_name == user.full_name
+
+
+@pytest.mark.asyncio
+async def test_get_with_invalid_id():
+    async with sessionmanager.session() as session:
+        result = await User.get(db=session, id="invalid_id")
+        assert result is None
 
 
 @pytest.mark.asyncio
