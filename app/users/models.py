@@ -5,6 +5,7 @@ from sqlalchemy.exc import IntegrityError, NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.services.database import Base
+from app.users.schemas import UserSchema
 
 
 class User(Base):
@@ -39,3 +40,21 @@ class User(Base):
     @classmethod
     async def get_all(cls, db: AsyncSession):
         return (await db.execute(select(cls))).scalars().all()
+
+    @classmethod
+    async def update(cls, db: AsyncSession, user_data: UserSchema, **kwargs):
+        for key, value in kwargs.items():
+            setattr(user_data, key, value) if value else None
+        try:
+            await db.commit()
+            await db.refresh(user_data)
+        except IntegrityError:
+            await db.rollback()
+            return None
+        return user_data
+
+    @classmethod
+    async def delete(cls, user, db: AsyncSession):
+        await db.delete(user)
+        await db.commit()
+        return user.email
