@@ -83,3 +83,50 @@ async def test_get_all(users):  # noqa F811
     async with sessionmanager.session() as session:
         qs = await User.get_all(db=session)
         assert len(qs) == 2
+
+
+@pytest.mark.asyncio
+async def test_update(user):  # noqa F811
+    async with sessionmanager.session() as session:
+        user_to_update = await User.get(db=session, id=user.id)
+        email = fake.email()
+        full_name = fake.name()
+
+        updated_user = await User.update(db=session, user_data=user_to_update, email=email, full_name=full_name)
+
+        assert updated_user.email == email
+        assert updated_user.full_name == full_name
+
+
+@pytest.mark.asyncio
+async def test_partial_update(user):  # noqa F811
+    async with sessionmanager.session() as session:
+        user_to_update = await User.get(db=session, id=user.id)
+        full_name = fake.name()
+
+        updated_user = await User.update(db=session, user_data=user_to_update, full_name=full_name)
+
+        assert updated_user.email == user_to_update.email
+        assert updated_user.full_name == full_name
+
+
+@pytest.mark.asyncio
+async def test_update_with_duplicated_email(users):  # noqa F811
+    async with sessionmanager.session() as session:
+        user_to_update = await User.get(db=session, id=users[0].id)
+
+        updated_user = await User.update(db=session, user_data=user_to_update, email=users[1].email)
+
+        assert updated_user is None
+
+
+@pytest.mark.asyncio
+async def test_delete(user):  # noqa F811
+    async with sessionmanager.session() as session:
+        deleted_user = await User.delete(db=session, user=user)
+
+        assert deleted_user == user.email
+
+        # verify that the user is deleted from the database
+        result = await session.execute(select(User).filter_by(id=user.id))
+        assert result.scalar() is None
