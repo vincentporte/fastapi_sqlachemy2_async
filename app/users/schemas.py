@@ -1,10 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
 
 class UserSchemaBase(BaseModel):
-    # todo : convert to email type
-    email: str | None = None
-    full_name: str | None = None
+    email: EmailStr
+    full_name: str
 
 
 class UserSchemaCreate(UserSchemaBase):
