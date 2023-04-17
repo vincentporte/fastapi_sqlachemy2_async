@@ -10,6 +10,11 @@ class UserSchemaCreate(UserSchemaBase):
     pass
 
 
+class UserSchemaUpdate(BaseModel):
+    email: EmailStr
+    full_name: str | None = None
+
+
 class UserSchema(UserSchemaBase):
     id: str
 
