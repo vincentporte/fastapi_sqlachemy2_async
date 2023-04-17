@@ -18,3 +18,4 @@ async def users():
     async with sessionmanager.session() as session:
         await User.create(db=session, email=fake.email(), full_name=fake.name())
         await User.create(db=session, email=fake.email(), full_name=fake.name())
+        return await User.get_all(db=session)
