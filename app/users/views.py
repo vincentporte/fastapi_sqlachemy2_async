@@ -11,7 +11,7 @@ router = APIRouter(prefix="/users")
 
 
 @router.get("/", response_class=HTMLResponse)
-async def users_list(request: Request, db: AsyncSession = Depends(get_db)):
+async def get_users_list(request: Request, db: AsyncSession = Depends(get_db)):
     users = await UserModel.get_all(db)
     context = {"request": request, "users": users}
     return templates.TemplateResponse("users/list.html", context)
