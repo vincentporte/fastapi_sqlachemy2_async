@@ -2,15 +2,15 @@
 
 
 {% block title %}
-  <title>Create new user</title>
+  <title>Create new organization</title>
 {% endblock %}
 
 {% block content %}
 
 <div class="container">
-    <h1 class="display-4">Create new user</h1>
+    <h1 class="display-4">Create new organization</h1>
 
-    <form method="POST" action="{{ url_for('create_user_submit') }}">
+    <form method="POST" action="{{ url_for('create_organization_submit') }}">
 
       <div class="form-group mt-3">
         <label for="full_name">Full Name:</label>
@@ -35,7 +35,7 @@
         {% endif %}
       </div>
 
-      <button type="submit" class="btn btn-primary mt-3">Create user</button>
+      <button type="submit" class="btn btn-primary mt-3">Create organization</button>
   </form>
 
 </div>

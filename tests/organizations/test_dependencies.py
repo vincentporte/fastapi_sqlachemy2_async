@@ -1,10 +1,10 @@
 import pytest
 from faker import Faker
 
+from app.organizations.dependencies import valid_organization_id, valid_UUID4
 from app.services.database import sessionmanager
 from app.services.exceptions import BadRequest, NotFound
-from app.users.dependencies import valid_user_id, valid_UUID4
-from tests.fixtures import user  # noqa: F401
+from tests.fixtures import organization  # noqa: F401
 
 fake = Faker()
 
@@ -24,15 +24,15 @@ async def test_valid_uuid4_with_invalid_uuid4():
 
 
 @pytest.mark.asyncio
-async def test_valid_user_id(user):  # noqa: F811
+async def test_valid_organization_id(organization):  # noqa: F811
     async with sessionmanager.session() as session:
-        result = await valid_user_id(user_id=user.id, db=session)
-        assert result.id == user.id
+        result = await valid_organization_id(organization_id=organization.id, db=session)
+        assert result.id == organization.id
 
 
 @pytest.mark.asyncio
-async def test_valid_user_id_with_unexistent_uuid():
+async def test_valid_organization_id_with_unexistent_uuid():
     async with sessionmanager.session() as session:
         with pytest.raises(NotFound) as exc_info:
-            await valid_user_id(user_id=fake.uuid4(), db=session)
+            await valid_organization_id(organization_id=fake.uuid4(), db=session)
         assert exc_info.value.status_code == 404

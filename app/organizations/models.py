@@ -4,12 +4,12 @@ from sqlalchemy import Column, String, select
 from sqlalchemy.exc import IntegrityError, NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.organizations.schemas import OrganizationSchema
 from app.services.database import Base
-from app.users.schemas import UserSchema
 
 
-class User(Base):
-    __tablename__ = "users"
+class Organization(Base):
+    __tablename__ = "organizations"
     id = Column(String, primary_key=True)
     email = Column(String, unique=True, nullable=False)
     full_name = Column(String, nullable=False)
@@ -42,19 +42,19 @@ class User(Base):
         return (await db.execute(select(cls))).scalars().all()
 
     @classmethod
-    async def update(cls, db: AsyncSession, user_data: UserSchema, **kwargs):
+    async def update(cls, db: AsyncSession, organization_data: OrganizationSchema, **kwargs):
         for key, value in kwargs.items():
-            setattr(user_data, key, value) if value else None
+            setattr(organization_data, key, value) if value else None
         try:
             await db.commit()
-            await db.refresh(user_data)
+            await db.refresh(organization_data)
         except IntegrityError:
             await db.rollback()
             return None
-        return user_data
+        return organization_data
 
     @classmethod
-    async def delete(cls, user, db: AsyncSession):
-        await db.delete(user)
+    async def delete(cls, organization, db: AsyncSession):
+        await db.delete(organization)
         await db.commit()
-        return user.email
+        return organization.email
