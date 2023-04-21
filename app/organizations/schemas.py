@@ -1,21 +1,21 @@
 from pydantic import BaseModel, EmailStr
 
 
-class UserSchemaBase(BaseModel):
+class OrganizationSchemaBase(BaseModel):
     email: EmailStr
     full_name: str
 
 
-class UserSchemaCreate(UserSchemaBase):
+class OrganizationSchemaCreate(OrganizationSchemaBase):
     pass
 
 
-class UserSchemaUpdate(BaseModel):
+class OrganizationSchemaUpdate(BaseModel):
     email: EmailStr
     full_name: str | None = None
 
 
-class UserSchema(UserSchemaBase):
+class OrganizationSchema(OrganizationSchemaBase):
     id: str
 
     class Config:

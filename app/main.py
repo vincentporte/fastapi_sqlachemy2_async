@@ -6,8 +6,8 @@ from fastapi.openapi.utils import get_openapi
 from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
+from app.organizations import routes, views
 from app.services.database import sessionmanager
-from app.users import routes, views
 
 
 class MainApp:
@@ -37,8 +37,8 @@ class MainApp:
         async def status():
             return {"status": "up"}
 
-        self.app.include_router(routes.router, prefix="/api", tags=["user"])
-        self.app.include_router(views.router, tags=["user_views"])
+        self.app.include_router(routes.router, prefix="/api", tags=["organization"])
+        self.app.include_router(views.router, tags=["organization_views"])
 
     def add_middleware(self):
         # CORS
